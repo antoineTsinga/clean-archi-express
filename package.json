@@ -1,0 +1,39 @@
+{
+  "name": "clean-archi-express",
+  "version": "1.0.0",
+  "description": "Backend using clean architeture and dependancy injection",
+  "license": "ISC",
+  "author": "Antoine TSINGA",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "vitest run",
+    "lint": "eslint . --ext .ts",
+    "clean": "rm -rf dist",
+    "dev": "nodemon --exec tsx ./src/index.ts",
+    "build": "npm run clean && tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "start": "cross-env NODE_ENV=production node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "nodemon": "^3.1.10",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "cross-env": "^10.1.0",
+    "express": "^5.1.0",
+    "fast-glob": "^3.3.3",
+    "pino": "^10.1.0",
+    "pino-http": "^11.0.0",
+    "pino-pretty": "^13.1.2",
+    "reflect-metadata": "^0.2.2",
+    "sqlite3": "^5.1.7",
+    "string-width": "^8.1.0",
+    "tsyringe": "^4.10.0",
+    "typeorm": "^0.3.27"
+  }
+}

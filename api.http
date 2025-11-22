@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:3000
+
+### Create a new user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+
+### Try to create the same user again (should fail with 409)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+
+### Create another user
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+### Greet a user (replace :userId with actual ID)
+GET {{baseUrl}}/greet/:userId
+
