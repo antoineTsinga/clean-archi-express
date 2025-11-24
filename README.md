@@ -43,6 +43,8 @@ src/
 - ✅ **Dependency Injection** with tsyringe
 - ✅ **Structured Error Handling** with custom error classes
 - ✅ **Logging** with Pino
+- ✅ **Security middleware: helmet, CORS, rate limiting**
+- ✅ **Request validation with Zod (body, params, query)**
 - ✅ **Unit Testing** with Vitest
 - ✅ **Type Safety** with TypeScript
 - ✅ **Auto-registration** of DI containers
@@ -87,27 +89,6 @@ npm start
 npm test
 ```
 
-## 📡 API Endpoints
-
-### Users
-
-- `POST /users` - Create a new user
-  ```json
-  {
-    "name": "John Doe",
-    "email": "john@example.com"
-  }
-  ```
-
-### Greeting
-
-- `GET /greet/:userId` - Greet a user by ID
-  ```json
-  {
-    "message": "Hello, John Doe!"
-  }
-  ```
-
 ## 🧪 Testing the API
 
 Use the included `api.http` file with the **REST Client** VS Code extension, or use curl:
@@ -118,8 +99,6 @@ curl -X POST http://localhost:3000/users \
   -H "Content-Type: application/json" \
   -d '{"name": "John Doe", "email": "john@example.com"}'
 
-# Greet the user (replace with actual ID)
-curl http://localhost:3000/greet/<user-id>
 ```
 
 ## 🏛️ Architecture Principles
