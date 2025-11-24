@@ -21,30 +21,7 @@ type ScanOptions = {
   container?: DependencyContainer; // container à observer (parent)
 };
 
-function detectRole(
-  file: string
-): "registry" | "controller" | "service" | "repository" | "usecase" | "other" {
-  const lower = file.toLowerCase();
-
-  if (lower.includes(".registry.") || lower.includes(".registrar.")) {
-    return "registry";
-  }
-  if (lower.includes(".controller.")) {
-    return "controller";
-  }
-  if (lower.includes(".service.")) {
-    return "service";
-  }
-  if (lower.includes(".repository.")) {
-    return "repository";
-  }
-  if (lower.includes(".usecase.") || lower.includes(".usecases.")) {
-    return "usecase";
-  }
-  return "other";
-}
-
-function formatToken(token: unknown): string {
+export function formatToken(token: unknown): string {
   if (typeof token === "string") return `token "${token}"`;
   if (typeof token === "symbol") return token.toString();
   if (typeof token === "function" && (token as any).name) {
@@ -53,7 +30,7 @@ function formatToken(token: unknown): string {
   return String(token);
 }
 
-function formatProviderKind(kind: ProviderKind): string {
+export function formatProviderKind(kind: ProviderKind): string {
   switch (kind) {
     case "class":
       return "useClass";
@@ -68,7 +45,7 @@ function formatProviderKind(kind: ProviderKind): string {
   }
 }
 
-function diffSnapshots(
+export function diffSnapshots(
   before: ContainerSnapshot,
   after: ContainerSnapshot,
   container?: DependencyContainer
@@ -94,10 +71,7 @@ function diffSnapshots(
   return added;
 }
 
-function getClassName(
-  element: any,
-  container?: DependencyContainer
-): string | undefined {
+export function getClassName(element: any, container?: DependencyContainer): string | undefined {
   if (element.useClass) {
     // Cas le plus fréquent : useClass: MaClasse
     return element.useClass.name || "(anonymous class)";
@@ -131,7 +105,7 @@ function getClassName(
   return undefined;
 }
 
-function introspectFactoryReturnTypeName(
+export function introspectFactoryReturnTypeName(
   factory: any,
   container?: DependencyContainer
 ): string | undefined {
@@ -139,8 +113,7 @@ function introspectFactoryReturnTypeName(
 
   try {
     // Si la factory attend le container, on le passe
-    const result =
-      factory.length > 0 && container ? factory(container) : factory();
+    const result = factory.length > 0 && container ? factory(container) : factory();
 
     if (result && result.constructor && result.constructor.name) {
       return result.constructor.name;
@@ -181,9 +154,7 @@ export async function autoRegister({
   });
 
   if (!files.length && strict) {
-    throw new Error(
-      `autoRegister: aucun fichier trouvé pour ${globs.join(", ")}`
-    );
+    throw new Error(`autoRegister: aucun fichier trouvé pour ${globs.join(", ")}`);
   }
 
   const projectRoot = process.cwd();
@@ -219,21 +190,8 @@ export async function autoRegister({
   } else {
     console.log("\n  Fichiers :");
     files.forEach((file) => {
-      const role = detectRole(file);
-      const icon =
-        role === "controller"
-          ? chalk.blue("◎")
-          : role === "service"
-          ? chalk.green("◆")
-          : role === "repository"
-          ? chalk.magenta("◈")
-          : role === "registry"
-          ? chalk.cyan("⬢")
-          : role === "usecase"
-          ? chalk.yellow("⬡")
-          : chalk.white("•");
-
-      console.log(`    ${icon} ${chalk.gray(file)} (${role})`);
+      const icon = chalk.cyan("⬢");
+      console.log(`    ${icon} ${chalk.gray(file)}`);
     });
   }
 

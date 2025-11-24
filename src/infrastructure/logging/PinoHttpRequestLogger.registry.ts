@@ -1,6 +1,6 @@
 import { injectable, registry } from "tsyringe";
 import { pinoHttp } from "pino-http";
-import { RequestHandler, Request, Response, response } from "express";
+import { RequestHandler, Request, Response } from "express";
 import { randomUUID } from "crypto";
 
 import { createBasePinoLogger } from "./pinoConfig.js";
@@ -33,7 +33,7 @@ export class PinoHttpRequestLogger implements IHttpRequestLogger {
         res: () => undefined,
         responseTime: () => undefined,
       },
-      customLogLevel: function (req, res, err) {
+      customLogLevel: function (_req, res, err) {
         if (res.statusCode >= 400 && res.statusCode < 500) {
           return "warn";
         } else if (res.statusCode >= 500 || err) {
@@ -61,19 +61,14 @@ export class PinoHttpRequestLogger implements IHttpRequestLogger {
     return id;
   }
 
-  private customReceivedMessage(req: Request, res: Response): string {
+  private customReceivedMessage(req: Request, _res: Response): string {
     // on stocke un startAt haute résolution sur la requête
     const reqAny = req as any;
     reqAny._startAt = process.hrtime.bigint() as HighResTime;
 
-    const ip =
-      req.ip ||
-      req.headers["x-forwarded-for"] ||
-      req.socket?.remoteAddress ||
-      "-";
+    const ip = req.ip || req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "-";
 
     const path = req.originalUrl || req.url;
-    const ts = new Date().toISOString();
 
     // pino-http rajoutera le niveau etc., ici on se consacre au message
     return `(#${reqAny.id}) Started ${req.method} ${path} for ${ip}`;
@@ -87,9 +82,7 @@ export class PinoHttpRequestLogger implements IHttpRequestLogger {
 
     const length = res.getHeader("content-length") ?? 0;
 
-    return `(#${reqAny.id}) Completed ${
-      res.statusCode
-    } ${length} in ${diffMs.toFixed(3)} ms`;
+    return `(#${reqAny.id}) Completed ${res.statusCode} ${length} in ${diffMs.toFixed(3)} ms`;
   }
 
   private customErrorMessage(req: Request, res: Response, err: Error): string {
@@ -99,11 +92,8 @@ export class PinoHttpRequestLogger implements IHttpRequestLogger {
     const diffMs = Number(end - start) / 1e6;
 
     const length = res.getHeader("content-length") ?? 0;
-    const ts = new Date().toISOString();
 
-    return `(#${reqAny.id}) Error ${
-      res.statusCode
-    } ${length} in ${diffMs.toFixed(3)} ms - ${
+    return `(#${reqAny.id}) Error ${res.statusCode} ${length} in ${diffMs.toFixed(3)} ms - ${
       err?.message ?? "unknown error"
     }`;
   }

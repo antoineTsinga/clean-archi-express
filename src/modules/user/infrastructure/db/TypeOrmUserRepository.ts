@@ -1,12 +1,13 @@
-
 import { IUserRepository } from "@modules/user/domain/IUserRepository.js";
 
-import { AppDataSource } from "@/infrastructure/db/db.js";
+import { getDataSource } from "@/infrastructure/db/db.js";
 import { UserEntity } from "./UserEntity.js";
 import { User } from "@modules/user/domain/User.js";
 
 export class TypeOrmUserRepository implements IUserRepository {
-  private repository = AppDataSource.getRepository(UserEntity);
+  private get repository() {
+    return getDataSource().getRepository(UserEntity);
+  }
 
   async save(user: User): Promise<User> {
     const entity = new UserEntity();

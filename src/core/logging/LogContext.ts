@@ -12,6 +12,5 @@ export interface LogContext {
   tenantId?: string;
 
   // extend attribute :
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

@@ -28,6 +28,7 @@ export class AppError extends Error {
 ```
 
 **Properties**:
+
 - `message`: Human-readable error message
 - `statusCode`: HTTP status code (e.g., 400, 404, 409)
 - `code`: Machine-readable error code (e.g., "USER_ALREADY_EXISTS")
@@ -42,21 +43,13 @@ import { AppError } from "@/core/errors/AppError.js";
 
 export class UserAlreadyExistsError extends AppError {
   constructor(email: string) {
-    super(
-      `User with email ${email} already exists`,
-      409,
-      "USER_ALREADY_EXISTS"
-    );
+    super(`User with email ${email} already exists`, 409, "USER_ALREADY_EXISTS");
   }
 }
 
 export class UserNotFoundError extends AppError {
   constructor(userId: string) {
-    super(
-      `User with ID ${userId} not found`,
-      404,
-      "USER_NOT_FOUND"
-    );
+    super(`User with ID ${userId} not found`, 404, "USER_NOT_FOUND");
   }
 }
 ```
@@ -71,11 +64,11 @@ Throw domain errors in your use cases:
 export class CreateUser implements ICreateUser {
   async execute(name: string, email: string): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(email);
-    
+
     if (existingUser) {
       throw new UserAlreadyExistsError(email);
     }
-    
+
     const user = new User(randomUUID(), name, email);
     return this.userRepository.save(user);
   }
@@ -88,12 +81,7 @@ The error middleware catches all errors and formats responses:
 
 ```typescript
 // infrastructure/http/error.middleware.ts
-export function errorMiddleware(
-  err: unknown,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function errorMiddleware(err: unknown, req: Request, res: Response, next: NextFunction) {
   // Handle AppError instances
   if (err instanceof AppError) {
     req.logger.warn("Business error", {
@@ -101,7 +89,7 @@ export function errorMiddleware(
       code: err.code,
       message: err.message,
     });
-    
+
     res.status(err.statusCode).json({
       code: err.code,
       message: err.message,
@@ -110,9 +98,8 @@ export function errorMiddleware(
   }
 
   // Handle unexpected errors
-  const error = err instanceof Error
-    ? err
-    : new Error(typeof err === "string" ? err : "Unknown error");
+  const error =
+    err instanceof Error ? err : new Error(typeof err === "string" ? err : "Unknown error");
 
   req.logger.error("Unhandled application error", {
     context: "ExpressError",
@@ -153,6 +140,7 @@ export class UserController {
 ## HTTP Response Examples
 
 ### Success (201 Created)
+
 ```json
 {
   "id": "123e4567-e89b-12d3-a456-426614174000",
@@ -162,6 +150,7 @@ export class UserController {
 ```
 
 ### Business Error (409 Conflict)
+
 ```json
 {
   "code": "USER_ALREADY_EXISTS",
@@ -170,6 +159,7 @@ export class UserController {
 ```
 
 ### Unexpected Error (500 Internal Server Error)
+
 ```json
 {
   "code": "INTERNAL_SERVER_ERROR",
@@ -180,20 +170,18 @@ export class UserController {
 ## Creating New Error Types
 
 1. **Create the error class**:
+
 ```typescript
 // modules/mymodule/domain/errors/MyErrors.ts
 export class MyCustomError extends AppError {
   constructor(detail: string) {
-    super(
-      `Something went wrong: ${detail}`,
-      400,
-      "MY_CUSTOM_ERROR"
-    );
+    super(`Something went wrong: ${detail}`, 400, "MY_CUSTOM_ERROR");
   }
 }
 ```
 
 2. **Throw in use case**:
+
 ```typescript
 if (invalidCondition) {
   throw new MyCustomError("Invalid data");
@@ -224,18 +212,18 @@ it("should throw if user already exists", async () => {
   const existingUser = new User("123", "John Doe", "john@example.com");
   (mockUserRepository.findByEmail as any).mockResolvedValue(existingUser);
 
-  await expect(
-    createUser.execute("Jane Doe", "john@example.com")
-  ).rejects.toThrow(UserAlreadyExistsError);
+  await expect(createUser.execute("Jane Doe", "john@example.com")).rejects.toThrow(
+    UserAlreadyExistsError
+  );
 });
 ```
 
 ## Error Codes Reference
 
-| Code | Status | Description |
-|------|--------|-------------|
-| `USER_ALREADY_EXISTS` | 409 | User with this email already exists |
-| `USER_NOT_FOUND` | 404 | User with this ID not found |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected server error |
+| Code                    | Status | Description                         |
+| ----------------------- | ------ | ----------------------------------- |
+| `USER_ALREADY_EXISTS`   | 409    | User with this email already exists |
+| `USER_NOT_FOUND`        | 404    | User with this ID not found         |
+| `INTERNAL_SERVER_ERROR` | 500    | Unexpected server error             |
 
 Add your custom error codes to this table as you create them.

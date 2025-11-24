@@ -25,3 +25,15 @@ Content-Type: application/json
 ### Greet a user (replace :userId with actual ID)
 GET {{baseUrl}}/greet/:userId
 
+### Get user projects (replace :userId with actual ID)
+GET {{baseUrl}}/projects/5f98a41a-67b1-453d-949b-7b3e93d2168c
+
+### Create a new project
+POST {{baseUrl}}/projects
+Content-Type: application/json
+
+{
+  "name": "Project 1",
+  "description": "Description of Project 1",
+  "userId": "5f98a41a-67b1-453d-949b-7b3e93d2168c"
+}

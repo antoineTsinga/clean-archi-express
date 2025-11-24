@@ -30,7 +30,8 @@ src/
     │   ├── application/  # Use cases
     │   ├── infrastructure/ # Repositories, controllers
     │   └── public/       # Public API for other modules
-    └── greeting/
+    └── project/
+        ├── domain/       # Entities, interfaces
         ├── application/  # Use cases
         └── infrastructure/ # Controllers, DI
 ```
@@ -126,12 +127,14 @@ curl http://localhost:3000/greet/<user-id>
 ### Dependency Rule
 
 Dependencies flow **inward**:
+
 - `Infrastructure` → `Application` → `Domain`
 - `Core` is independent
 
 ### Module Communication
 
 Modules communicate via **public APIs**:
+
 - Each module exposes an `IModulePublicApi` interface
 - Other modules depend on interfaces, not implementations
 - Example: `Greeting` module uses `IUserPublicApi` to fetch user data
@@ -146,8 +149,11 @@ Modules communicate via **public APIs**:
 
 See the `docs/` folder for detailed documentation:
 
-- [Architecture Overview](docs/Architecture.md)
+- [Architecture Overview](docs/Architecture.md) (with Diagrams)
 - [Module Structure](docs/Modules.md)
+- [How to Create a Module](docs/HowToCreateModule.md)
+- [Security](docs/Security.md)
+- [Validation](docs/Validation.md)
 - [Error Handling](docs/ErrorHandler.md)
 - [Dependency Injection](docs/DependencyInjection.md)
 
