@@ -54,7 +54,7 @@ src/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20+
 - npm or yarn
 
 ### Installation
@@ -116,7 +116,7 @@ Modules communicate via **public APIs**:
 
 - Each module exposes an `IModulePublicApi` interface
 - Other modules depend on interfaces, not implementations
-- Example: `Greeting` module uses `IUserPublicApi` to fetch user data
+- Example: `Project` module uses `IUserPublicApi` to fetch user data
 
 ### Error Handling
 
