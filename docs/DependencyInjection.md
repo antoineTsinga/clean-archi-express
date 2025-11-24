@@ -32,7 +32,13 @@ export class UserRegistry {}
 
 ### Auto-Discovery
 
-The `autoRegister` function scans `src/` for `*.registry.ts` files and loads them automatically.
+The `autoRegister` function scans `src/` for:
+
+- `*.registry.ts`
+- `*.registrar.ts`
+- `*.controller.ts`, `*.service.ts`, `*.repository.ts`, `*.usecases.ts`
+
+It imports these files to trigger the `@registry` decorators.
 
 ## Tokens
 
@@ -57,9 +63,7 @@ export const TOKENS = {
 ```typescript
 @injectable()
 export class CreateUser {
-  constructor(
-    @inject(TOKENS.UserRepository) private userRepository: IUserRepository
-  ) {}
+  constructor(@inject(TOKENS.UserRepository) private userRepository: IUserRepository) {}
 }
 ```
 

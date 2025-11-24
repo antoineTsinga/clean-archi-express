@@ -5,10 +5,8 @@ export type ProviderKind = "class" | "value" | "factory" | "token" | "unknown";
 export interface RegistrationInfo {
   token: unknown;
   providerKind: ProviderKind;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   provider: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  raw: any; // l’objet Registration brut (pour debug)
+  raw: any; // l'objet Registration brut (pour debug)
 }
 
 export interface ContainerSnapshot {
@@ -22,9 +20,7 @@ export interface ContainerSnapshot {
  * @param container
  * @returns ContainerSnapshot
  */
-export function snapshotContainer(
-  container: DependencyContainer
-): ContainerSnapshot {
+export function snapshotContainer(container: DependencyContainer): ContainerSnapshot {
   const internal = container as any;
 
   const registry = internal._registry;
@@ -34,17 +30,15 @@ export function snapshotContainer(
 
   const byToken = new Map<unknown, RegistrationInfo[]>();
 
-  for (const [token, registrations] of registry.entries() as Iterable<
-    [unknown, any[]]
-  >) {
+  for (const [token, registrations] of registry.entries() as Iterable<[unknown, any[]]>) {
     const infos: RegistrationInfo[] = registrations.map((reg: any) => {
       const provider = reg.provider ?? reg; // suivant version
       let providerKind: ProviderKind = "unknown";
 
       if (provider.useClass) providerKind = "class";
       else if (provider.useValue !== undefined) providerKind = "value";
-      else if (provider.useFactory) providerKind = "factory";
-      else if (provider.useToken) providerKind = "token";
+      else if (provider.useFactory !== undefined) providerKind = "factory";
+      else if (provider.useToken !== undefined) providerKind = "token";
 
       return {
         token,

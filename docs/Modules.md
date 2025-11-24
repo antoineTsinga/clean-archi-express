@@ -26,24 +26,24 @@ Modules **never** import directly from each other's internal layers. Instead:
 
 ```
 ❌ BAD: Direct import
-greeting/GreetUser.ts → user/application/GetUserById.ts
+project/GetUserProjects.ts → user/application/GetUserById.ts
 
 ✅ GOOD: Via public API
-greeting/GreetUser.ts → user/public/IUserPublicApi.ts
+project/GetUserProjects.ts → user/public/IUserPublicApi.ts
 ```
 
 **Example**:
-```typescript
-// Greeting module depends on User's PUBLIC API only
-@injectable()
-export class GreetUser implements IGreetUser {
-  constructor(
-    @inject(TOKENS.UserPublicApi) private userApi: IUserPublicApi
-  ) {}
 
-  async execute(userId: string): Promise<string> {
+```typescript
+// Project module depends on User's PUBLIC API only
+@injectable()
+export class GetUserProjects implements IGetUserProjects {
+  constructor(@inject(TOKENS.UserPublicApi) private userApi: IUserPublicApi) {}
+
+  async execute(userId: string): Promise<Project[]> {
     const user = await this.userApi.getUserById(userId);
-    return user ? `Hello, ${user.name}!` : "Hello, Guest!";
+    if (!user) return [];
+    // ...
   }
 }
 ```
@@ -67,7 +67,7 @@ User Module (Bounded Context)
 ├── Infrastructure (DB, HTTP)
 └── Public API (contract for other modules)
 
-Greeting Module (Bounded Context)
+Project Module (Bounded Context)
 ├── Domain
 ├── Application (depends on User's public API)
 └── Infrastructure
@@ -76,12 +76,14 @@ Greeting Module (Bounded Context)
 ### When to Create a New Module?
 
 Create a new module when:
+
 - ✅ The feature represents a distinct **bounded context** (DDD concept)
 - ✅ It has its own **business rules** and **entities**
 - ✅ It could potentially become a **separate service** in the future
 - ✅ Multiple teams might work on different modules
 
 Don't create a module for:
+
 - ❌ Simple CRUD operations without business logic
 - ❌ Shared utilities (put these in `core/`)
 - ❌ Just to organize code (use folders instead)
@@ -115,7 +117,9 @@ modules/
 Tests can be organized in **two ways**:
 
 #### Option 1: Co-located Tests (Current Approach)
+
 Place test files next to the code they test:
+
 ```
 application/
 ├── CreateUser.ts
@@ -126,7 +130,9 @@ application/
 **Cons**: Mixes test and production code
 
 #### Option 2: Separate Tests Directory
+
 Place all tests in a dedicated `tests/` folder:
+
 ```
 tests/
 ├── unit/
@@ -207,9 +213,7 @@ export interface ICreateMyEntity {
 // application/CreateMyEntity.ts
 @injectable()
 export class CreateMyEntity implements ICreateMyEntity {
-  constructor(
-    @inject(TOKENS.MyRepository) private repo: IMyRepository
-  ) {}
+  constructor(@inject(TOKENS.MyRepository) private repo: IMyRepository) {}
 
   async execute(name: string): Promise<MyEntity> {
     const entity = new MyEntity(randomUUID(), name);
@@ -295,9 +299,7 @@ export interface IMyPublicApi {
 // public/MyPublicApi.ts
 @injectable()
 export class MyPublicApi implements IMyPublicApi {
-  constructor(
-    @inject(TOKENS.GetMyEntityById) private getById: GetMyEntityById
-  ) {}
+  constructor(@inject(TOKENS.GetMyEntityById) private getById: GetMyEntityById) {}
 
   async getById(id: string): Promise<MyDto | null> {
     const entity = await this.getById.execute(id);

@@ -9,9 +9,7 @@ import { UserAlreadyExistsError } from "../domain/errors/UserErrors.js";
 
 @injectable()
 export class CreateUser implements ICreateUser {
-  constructor(
-    @inject(TOKENS.UserRepository) private userRepository: IUserRepository
-  ) {}
+  constructor(@inject(TOKENS.UserRepository) private userRepository: IUserRepository) {}
 
   async execute(name: string, email: string): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(email);

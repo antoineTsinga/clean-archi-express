@@ -1,0 +1,145 @@
+
+> clean-archi-express@1.0.0 lint
+> eslint .
+
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\pino-pretty-transport.cjs
+  2:3  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\core\cli\startupBanner.ts
+  67:9  warning  'separator' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\di\autoRegister.ts
+   27:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   28:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   55:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   74:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  109:12  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\di\containerIntrospection.ts
+  26:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:81  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\httpServer.ts
+  64:22  warning  'req' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  64:27  warning  'res' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\http\middleware\error.middleware.ts
+  4:76  warning  'next' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\logging\PinoHttpRequestLogger.registry.ts
+   3:45  warning  'response' is defined but never used                                   @typescript-eslint/no-unused-vars
+  64:47  warning  'res' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  66:27  warning  Unexpected any. Specify a different type                               @typescript-eslint/no-explicit-any
+  72:11  warning  'ts' is assigned a value but never used                                @typescript-eslint/no-unused-vars
+  79:27  warning  Unexpected any. Specify a different type                               @typescript-eslint/no-explicit-any
+  90:27  warning  Unexpected any. Specify a different type                               @typescript-eslint/no-explicit-any
+  96:11  warning  'ts' is assigned a value but never used                                @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\security\SecurityFilterChain.ts
+  87:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\infrastructure\utils\portUtils.ts
+  12:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\modules\project\infrastructure\Project.registry.ts
+  1:10  warning  'container' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\src\pino-pretty-transport.cjs
+  2:3  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\core\cli\startupBanner.spec.ts
+   5:22  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  49:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\core\logging\setupGlobalErrorHandlers.spec.ts
+    8:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+    9:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   10:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   21:81  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   46:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   65:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  101:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\infrastructure\di\autoRegister.unit.spec.ts
+  48:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\infrastructure\httpServer.spec.ts
+    7:13  warning  'http' is defined but never used          @typescript-eslint/no-unused-vars
+   24:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   24:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   24:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   27:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   27:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   27:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   55:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:52  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   58:73  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  111:82  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  125:82  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\infrastructure\logging\PinoHttpRequestLogger.spec.ts
+  20:43  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:26  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:51  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:61  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  47:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  48:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\infrastructure\security\SecurityFilterChain.spec.ts
+  4:3   warning  'SecurityFilterChain' is defined but never used  @typescript-eslint/no-unused-vars
+  7:29  warning  'NextFunction' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\infrastructure\utils\portUtils.spec.ts
+  1:32  warning  'vi' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\integration\setup.ts
+  71:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  71:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  71:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\project\application\CreateProject.spec.ts
+  23:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\project\application\GetUserProjects.spec.ts
+  34:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:47  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  48:39  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\project\infrastructure\http\ProjectController.spec.ts
+   11:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   36:75  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   62:75  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:77  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  106:77  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\user\application\CreateUser.spec.ts
+  23:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  24:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\user\application\GetUserById.spec.ts
+  23:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  33:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\user\infrastructure\http\UserController.spec.ts
+  11:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  36:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:72  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\antoi\Projects\projet-test\clean-archi-express\test\modules\user\public\UserPublicApi.spec.ts
+  14:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  20:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 86 problems (2 errors, 84 warnings)
+

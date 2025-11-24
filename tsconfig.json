@@ -3,13 +3,13 @@
     "target": "ES2022",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-
-      "@modules/*": ["modules/*"],
-      "@/*": ["*"]
+      "@modules/*": ["src/modules/*"],
+      "@/*": ["src/*"],
+      "@test/*": ["test/*"]
     },
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,7 +20,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src"]
-  
+  "include": ["src", "test"]
 }
-

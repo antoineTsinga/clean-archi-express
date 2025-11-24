@@ -5,9 +5,7 @@ import { TOKENS } from "@/core/di/tokens.js";
 
 @injectable()
 export class UserPublicApi implements IUserPublicApi {
-  constructor(
-    @inject(TOKENS.GetUserById) private getUserByIdUseCase: GetUserById
-  ) {}
+  constructor(@inject(TOKENS.GetUserById) private getUserByIdUseCase: GetUserById) {}
 
   async getUserById(id: string): Promise<UserPublicDto | null> {
     const user = await this.getUserByIdUseCase.execute(id);

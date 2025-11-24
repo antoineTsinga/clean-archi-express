@@ -5,5 +5,7 @@ export const TOKENS = {
   CreateUser: Symbol.for("CreateUser"),
   GetUserById: Symbol.for("GetUserById"),
   UserPublicApi: Symbol.for("UserPublicApi"),
-  GreetUser: Symbol.for("GreetUser"),
+  ProjectRepository: Symbol.for("ProjectRepository"),
+  GetUserProjects: Symbol.for("GetUserProjects"),
+  CreateProject: Symbol.for("CreateProject"),
 };
