@@ -116,7 +116,7 @@ modules/
 
 Tests can be organized in **two ways**:
 
-#### Option 1: Co-located Tests (Current Approach)
+#### Option 1: Co-located Tests
 
 Place test files next to the code they test:
 
@@ -129,7 +129,7 @@ application/
 **Pros**: Easy to find tests, clear what's being tested
 **Cons**: Mixes test and production code
 
-#### Option 2: Separate Tests Directory
+#### Option 2: Separate Tests Directory (Current Approach)
 
 Place all tests in a dedicated `tests/` folder:
 
