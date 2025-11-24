@@ -14,8 +14,6 @@ describe("GetUserProjects Use Case", () => {
     mockProjectRepository = {
       save: vi.fn(),
       findAllByUserId: vi.fn(),
-      findById: vi.fn(),
-      findAll: vi.fn(),
     };
     mockUserPublicApi = {
       getUserById: vi.fn(),
