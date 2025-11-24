@@ -12,8 +12,6 @@ describe("CreateProject Use Case", () => {
     mockProjectRepository = {
       save: vi.fn(),
       findAllByUserId: vi.fn(),
-      findById: vi.fn(),
-      findAll: vi.fn(),
     };
     createProject = new CreateProject(mockProjectRepository);
   });

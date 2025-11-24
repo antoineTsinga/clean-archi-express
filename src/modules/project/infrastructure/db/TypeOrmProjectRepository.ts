@@ -18,19 +18,6 @@ export class TypeOrmProjectRepository implements IProjectRepository {
     return project;
   }
 
-  // async findById(id: string): Promise<Project | null> {
-  //   const entity = await this.repository.findOneBy({ id });
-  //   if (!entity) return null;
-  //   return new Project(entity.id, entity.name, entity.description, entity.userId);
-  // }
-
-  // async findAll(): Promise<Project[]> {
-  //   const entities = await this.repository.find();
-  //   return entities.map(
-  //     (entity) => new Project(entity.id, entity.name, entity.description, entity.userId)
-  //   );
-  // }
-
   async findAllByUserId(userId: string): Promise<Project[]> {
     const entities = await this.repository.find({ where: { userId } });
     return entities.map(
