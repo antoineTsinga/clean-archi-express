@@ -126,7 +126,11 @@ export class TypeOrmUserRepository implements IUserRepository {
 
 ## Module Communication
 
-Modules communicate via **public APIs**:
+Modules can communicate using two complementary patterns:
+
+### 1. Synchronous Communication via Public APIs
+
+For **direct, synchronous** interactions, modules expose public APIs:
 
 ```typescript
 // User module exposes IUserPublicApi
@@ -146,12 +150,144 @@ export class GetUserProjects {
 }
 ```
 
+**Use when:**
+
+- You need an immediate response
+- The result is required to continue processing
+- Direct module-to-module data retrieval
+
 ## Benefits
 
 1. **Testability**: Use cases can be tested with mocks
 2. **Flexibility**: Swap implementations (e.g., DB) without changing business logic
 3. **Maintainability**: Clear separation of concerns
 4. **Scalability**: Add new modules without affecting existing ones
+
+### 2. Asynchronous Communication via Domain Events
+
+For **decoupled, asynchronous** interactions, modules use domain events:
+
+#### Event Bus
+
+The `EventBus` is a centralized event dispatcher based on Node.js `EventEmitter`:
+
+```typescript
+// core/events/event-bus.ts
+export class EventBus extends EventEmitter {
+  emitEvent(event: DomainEvent) {
+    this.emit(event.type, event.payload);
+  }
+
+  onEvent<T extends DomainEvent["type"]>(
+    type: T,
+    handler: (payload: Extract<DomainEvent, { type: T }>["payload"]) => void | Promise<void>
+  ) {
+    this.on(type, handler as any);
+  }
+}
+```
+
+#### Domain Events
+
+Events are defined as discriminated unions in `core/events/domain-events.ts`:
+
+```typescript
+export type DomainEvent = {
+  type: "user.created";
+  payload: {
+    userId: string;
+    email: string;
+  };
+};
+// Add more events here
+```
+
+#### Emitting Events
+
+Use cases emit events after performing actions:
+
+```typescript
+@injectable()
+export class CreateUser implements ICreateUser {
+  constructor(
+    @inject(TOKENS.UserRepository) private userRepository: IUserRepository,
+    @inject(TOKENS.EventBus) private eventBus: EventBus
+  ) {}
+
+  async execute(name: string, email: string): Promise<User> {
+    const user = new User(randomUUID(), name, email);
+    const savedUser = await this.userRepository.save(user);
+
+    this.eventBus.emitEvent({
+      type: "user.created",
+      payload: {
+        userId: savedUser.id,
+        email: savedUser.email,
+      },
+    });
+
+    return savedUser;
+  }
+}
+```
+
+#### Listening to Events
+
+Modules can create listeners that subscribe to events:
+
+```typescript
+@injectable()
+export class OnUserCreated {
+  constructor(
+    @inject(TOKENS.EventBus) private eventBus: EventBus,
+    @inject(TOKENS.Logger) private logger: ILogger
+  ) {}
+
+  setup() {
+    this.eventBus.onEvent("user.created", this.handle.bind(this));
+  }
+
+  private async handle(payload: Extract<DomainEvent, { type: "user.created" }>["payload"]) {
+    this.logger.info(`[Notification] Welcome email sent to ${payload.email}`);
+  }
+}
+```
+
+Listeners are initialized in the module's registry:
+
+```typescript
+// Notifications.registry.ts
+@registry([
+  {
+    token: OnUserCreated,
+    useClass: OnUserCreated,
+  },
+])
+export class NotificationsRegistry {}
+
+const listener = container.resolve(OnUserCreated);
+listener.setup();
+```
+
+**Use when:**
+
+- Action is not critical to the main flow
+- Multiple modules need to react to the same event
+- Implementing side effects (emails, notifications, analytics)
+- Building audit trails
+
+### Comparison: Public APIs vs Events
+
+| Aspect                 | Public APIs       | Domain Events               |
+| ---------------------- | ----------------- | --------------------------- |
+| **Coupling**           | Direct dependency | Decoupled                   |
+| **Response**           | Synchronous       | Asynchronous                |
+| **Use Case**           | Data retrieval    | Side effects, notifications |
+| **Return Value**       | Yes               | No                          |
+| **Multiple Consumers** | One-to-one        | One-to-many                 |
+
+> [!TIP]
+> Use **Public APIs** when you need data immediately. Use **Events** when you want to notify other modules without creating dependencies.
 
 ## 🏗️ Modular Monolith Architecture
 

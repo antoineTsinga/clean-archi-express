@@ -76,6 +76,10 @@ export async function setupIntegrationTest() {
   container.register(TOKENS.Logger, { useValue: mockLogger });
   container.register(TOKENS.HttpRequestLogger, { useValue: mockLogger });
 
+  // Register EventBus
+  const { eventBus } = await import("@/core/events/event-bus.js");
+  container.register(TOKENS.EventBus, { useValue: eventBus });
+
   return testDataSource;
 }
 

@@ -49,6 +49,7 @@ src/
 - ✅ **Type Safety** with TypeScript
 - ✅ **Auto-registration** of DI containers
 - ✅ **Module Communication** via public APIs
+- ✅ **Event-Driven Architecture** for asynchronous communication
 
 ## 🚀 Quick Start
 
@@ -131,6 +132,7 @@ See the `docs/` folder for detailed documentation:
 - [Architecture Overview](docs/Architecture.md) (with Diagrams)
 - [Module Structure](docs/Modules.md)
 - [How to Create a Module](docs/HowToCreateModule.md)
+- [Event-Driven Architecture](docs/Events.md)
 - [Security](docs/Security.md)
 - [Validation](docs/Validation.md)
 - [Error Handling](docs/ErrorHandler.md)
