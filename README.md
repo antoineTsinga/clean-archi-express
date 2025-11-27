@@ -30,9 +30,11 @@ src/
 └── modules/          # Feature modules
     ├── user/
     │   ├── domain/       # Entities, interfaces
-    │   ├── application/  # Use cases
+    │   ├── application/  # Use cases, event emitter
     │   ├── infrastructure/ # Repositories, controllers
     │   └── public/       # Public API for other modules
+    └── notification/
+    │   └── infrastructure/ # event listener, DI
     └── project/
         ├── domain/       # Entities, interfaces
         ├── application/  # Use cases
@@ -116,11 +118,16 @@ Dependencies flow **inward**:
 
 ### Module Communication
 
-Modules communicate via **public APIs**:
+Modules communication via **public APIs**:
 
 - Each module exposes an `IModulePublicApi` interface
 - Other modules depend on interfaces, not implementations
 - Example: `Project` module uses `IUserPublicApi` to fetch user data
+
+Modules communication via **Domain Event**
+- Each module can emit event define in centralize core
+- Other can listen and subscribe to specific events
+- Example: `Notification` module listen on `User` module `user.created` emit event
 
 ### Error Handling
 
