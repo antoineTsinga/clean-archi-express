@@ -1,6 +1,9 @@
 > [!NOTE]
 > This project demonstrates **one possible implementation** of Clean Architecture. Adapt it to your specific needs.
 
+> [!NOTE]
+> This project probably **over engineering** to show how things it work. Adapt it your specific needs.
+
 # Clean Architecture Express API
 
 A production-ready Express.js API built with **Clean Architecture** principles, TypeScript.
