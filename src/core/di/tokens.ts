@@ -8,4 +8,5 @@ export const TOKENS = {
   ProjectRepository: Symbol.for("ProjectRepository"),
   GetUserProjects: Symbol.for("GetUserProjects"),
   CreateProject: Symbol.for("CreateProject"),
+  EventBus: Symbol.for("EventBus"),
 };

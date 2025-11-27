@@ -4,10 +4,12 @@ import { CreateUser } from "@modules/user/application/CreateUser.js";
 import { IUserRepository } from "@modules/user/domain/IUserRepository.js";
 import { User } from "@modules/user/domain/User.js";
 import { UserAlreadyExistsError } from "@modules/user/domain/errors/UserErrors.js";
+import { EventBus } from "@/core/events/event-bus.js";
 
 describe("CreateUser Use Case", () => {
   let createUser: CreateUser;
   let mockUserRepository: IUserRepository;
+  let mockEventBus: EventBus;
 
   beforeEach(() => {
     mockUserRepository = {
@@ -15,7 +17,10 @@ describe("CreateUser Use Case", () => {
       findByEmail: vi.fn(),
       findById: vi.fn(),
     };
-    createUser = new CreateUser(mockUserRepository);
+    mockEventBus = {
+      emitEvent: vi.fn(),
+    } as any;
+    createUser = new CreateUser(mockUserRepository, mockEventBus);
   });
 
   it("should create a new user", async () => {
@@ -32,6 +37,13 @@ describe("CreateUser Use Case", () => {
     // Verify interactions
     expect(mockUserRepository.findByEmail).toHaveBeenCalledWith("john@example.com");
     expect(mockUserRepository.save).toHaveBeenCalledWith(user);
+    expect(mockEventBus.emitEvent).toHaveBeenCalledWith({
+      type: "user.created",
+      payload: {
+        userId: user.id,
+        email: user.email,
+      },
+    });
   });
 
   it("should throw if user already exists", async () => {
