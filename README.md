@@ -6,7 +6,27 @@
 
 # Clean Architecture Express API
 
-A production-ready Express.js API built with **Clean Architecture** principles, TypeScript.
+> Express.js backend application implementing Clean Architecture principles with TypeScript, Dependency Injection, and Event-Driven Architecture
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![Express](https://img.shields.io/badge/Express-5.1-green.svg)](https://expressjs.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## 🎯 Overview
+
+This project demonstrates a Express.js backend built with **Clean Architecture** principles, ensuring:
+
+- **Separation of Concerns**: Clear boundaries between domain, application, and infrastructure layers
+- **Dependency Inversion**: Dependencies point inward toward the domain
+- **Testability**: Easy to mock and test each layer independently
+- **Maintainability**: Modular structure that scales with your application
+- **Type Safety**: Full TypeScript with strict mode enabled
+
+### Key Principles
+
+- **Domain Layer**: Pure business logic, no external dependencies
+- **Application Layer**: Use cases orchestrating domain logic
+- **Infrastructure Layer**: Concrete implementations (DB, HTTP, Events)
 
 ## 🏗️ Architecture
 
@@ -16,35 +36,45 @@ This project follows **Clean Architecture** with strict layer separation and a *
 
 Each feature is organized as an **independent module** with its own domain, application, and infrastructure layers. Modules communicate via **public APIs** only, ensuring loose coupling while maintaining the simplicity of a single deployment.
 
+The project structure is as follows:
+
 ```
-src/
-├── core/              # Domain-agnostic utilities
-│   ├── di/           # Dependency Injection tokens
-│   ├── errors/       # Base error classes
-│   ├── logging/      # Logging interfaces
-│   └── cli/          # CLI utilities
-├── infrastructure/    # External concerns (HTTP, DB, DI)
-│   ├── http/         # Express server, middleware
-│   ├── db/           # TypeORM configuration
-│   └── logging/      # Pino logger implementation
-└── modules/          # Feature modules
-    ├── user/
-    │   ├── domain/       # Entities, interfaces
-    │   ├── application/  # Use cases, event emitter
-    │   ├── infrastructure/ # Repositories, controllers
-    │   └── public/       # Public API for other modules
-    └── notification/
-    │   └── infrastructure/ # event listener, DI
-    └── project/
-        ├── domain/       # Entities, interfaces
-        ├── application/  # Use cases
-        └── infrastructure/ # Controllers, DI
+clean-archi-express/
+├── src/
+│   ├── core/                     # Domain-agnostic utilities
+│   │   ├── di/                   # Dependency Injection tokens
+│   │   ├── errors/               # Base error classes
+│   │   ├── logging/              # Logging interfaces
+│   │   ├── events/               # Event bus implementation
+│   │   └── cli/                  # CLI utilities
+│   ├── infrastructure/           # External concerns (HTTP, DB, DI)
+│   │   ├── http/                 # Express server, middleware
+│   │   ├── db/                   # TypeORM configuration
+│   │   └── logging/              # Pino logger implementation
+│   │   └── security/             # Security middleware
+│   └── modules/                  # Feature modules
+│       ├── user/
+│       │   ├── domain/           # Entities, interfaces
+│       │   ├── application/      # Use cases, event emitter
+│       │   ├── infrastructure/   # Repositories, controllers
+│       │   └── public/           # Public API for other modules
+│       └── notification/
+│       │   └── infrastructure/   # Event listener, DI
+│       └── project/
+│           ├── domain/           # Entities, interfaces
+│           ├── application/      # Use cases
+│           └── infrastructure/   # Controllers, DI
+├── test/                         # Tests (mirrors src structure)
+├── docs/                         # Documentation
+│   └── Architecture.md           # Detailed architecture docs
+└── README.md                     # Project documentation
+
 ```
 
 ## ✨ Features
 
 - ✅ **Clean Architecture** with strict dependency rules
-- ✅ **TypeORM** with SQLite (easily swappable)
+- ✅ **TypeORM** with SQLite (easily swappable with other database: postgresql, mysql, mongodb, etc)
 - ✅ **Dependency Injection** with tsyringe
 - ✅ **Structured Error Handling** with custom error classes
 - ✅ **Logging** with Pino
@@ -66,7 +96,15 @@ src/
 ### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/antoineTsinga/clean-archi-express.git
+cd clean-archi-express
+
+# Install dependencies
 npm install
+
+# Run in development mode
+npm run dev
 ```
 
 ### Development
@@ -89,10 +127,17 @@ npm run build
 npm start
 ```
 
-### Testing
+## 🧪 Testing
 
 ```bash
+# Run all tests
 npm test
+
+# Run tests with coverage
+npm test -- --coverage
+
+# Run tests in watch mode
+npm test -- --watch
 ```
 
 ## 🧪 Testing the API
@@ -125,6 +170,7 @@ Modules communication via **public APIs**:
 - Example: `Project` module uses `IUserPublicApi` to fetch user data
 
 Modules communication via **Domain Event**
+
 - Each module can emit event define in centralize core
 - Other can listen and subscribe to specific events
 - Example: `Notification` module listen on `User` module `user.created` emit event
@@ -177,3 +223,7 @@ See the `docs/` folder for detailed documentation:
 ## 📄 License
 
 MIT
+
+## 🏷️ Keywords
+
+`clean-architecture` `express` `typescript` `dependency-injection` `tsyringe` `event-driven` `typeorm` `hexagonal-architecture` `ddd` `domain-driven-design` `rest-api` `backend` `nodejs`
