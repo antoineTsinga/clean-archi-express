@@ -1,9 +1,28 @@
 {
   "name": "clean-archi-express",
   "version": "1.0.0",
-  "description": "Backend using clean architeture and dependancy injection",
-  "license": "ISC",
+  "description": "Express.js backend application implementing Clean Architecture principles with TypeScript, Dependency Injection (tsyringe), Event-Driven Architecture, and TypeORM",
+  "keywords": [
+    "clean-architecture",
+    "express",
+    "typescript",
+    "dependency-injection",
+    "tsyringe",
+    "event-driven",
+    "typeorm",
+    "hexagonal-architecture",
+    "ddd",
+    "domain-driven-design",
+    "rest-api",
+    "backend",
+    "nodejs"
+  ],
+  "license": "MIT",
   "author": "Antoine TSINGA",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antoineTsinga/clean-archi-express"
+  },
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
